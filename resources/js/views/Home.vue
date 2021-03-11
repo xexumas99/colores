@@ -6,6 +6,7 @@
                 <img class="my-4" v-if="imagenSeleccionada != null" :src="imagenSeleccionada" alt="imagenSeleccionada" height="300" width="300">
                 <label v-else class="my-4">Selecciona una imagen</label>
                 <input type="file" @change="onFileSelected">
+                <div v-if="rgb != null" class="bloque mt-3" :style='`background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`'></div>
             </div>
         </div>
     </div>
@@ -13,17 +14,47 @@
 
 <script>
 
+import axios from 'axios';
+
 export default {
 
     data(){
         return  {
             imagenSeleccionada: null,
+            rgb: null,
         }
     },
     methods: {
-        onFileSelected(event){
-            const file = event.target.files[0];
-            this.imagenSeleccionada = URL.createObjectURL(file);
+        async onFileSelected(event){
+
+            try {
+
+                const file = event.target.files[0];
+                this.imagenSeleccionada = URL.createObjectURL(file);
+
+                let bodyFormData = new FormData();
+                bodyFormData.append('imagen', file);
+
+                const res = await axios.post(
+                    '/color', 
+                    bodyFormData, 
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+
+                        }
+                    }
+                )
+                const data = res.data
+
+                this.rgb = {
+                    r: data.r,
+                    g: data.g,
+                    b: data.b,
+                }
+            } catch (error) {
+                console.log(error.message)
+            }
         }
     }
 }
@@ -32,5 +63,11 @@ export default {
 <style scoped>
     h1 {
         color: #343a40;
+    }
+
+    .bloque {
+        display:block;
+        height:50px;
+        width:400px;
     }
 </style>
