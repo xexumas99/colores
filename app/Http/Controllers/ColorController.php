@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Providers\ColorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+
+use App\Providers\League\Color;
+use App\Providers\League\Palette;
+use App\Providers\League\ColorExtractor;
 
 class ColorController extends Controller
 {
@@ -11,8 +16,8 @@ class ColorController extends Controller
     {
         
         try {
-            //$dominantColor = ColorThief::getColor("https://d2skuhm0vrry40.cloudfront.net/2020/articles/2020-03-16-08-08/persona-5-royal-analisis-1584346130165.jpg/EG11/thumbnail/750x422/format/jpg/quality/60");
-            $img = $request->file('imagen')->store('imagenes'); 
+
+            $img = $request->file('imagen')->storeAs('imagenes', 'imagen.png'); 
 
             $path = storage_path('app/' . $img);
 
@@ -21,39 +26,29 @@ class ColorController extends Controller
             }
 
             //$file = File::get($path);
-            $type = File::mimeType($path);
-            $i = '';
+            // $type = File::mimeType($path);
+            // $i = '';
 
-            if($type == 'image/jpeg'){
+            // if($type == 'image/jpeg'){
 
-                $i = imagecreatefromjpeg($path);
-            }            
-            else if($type == 'image/png'){
+            //     $i = imagecreatefromjpeg($path);
+            // }            
+            // else if($type == 'image/png'){
 
-                $i = imagecreatefrompng($path);
-            }
+            //     $i = imagecreatefrompng($path);
+            // }
+            
+            $palette = Palette::fromFilename($path);
 
-            $rTotal = 0;
-            $vTotal = 0;
-            $aTotal = 0;
-            $total = 0;
-            for ($x=0;$x<imagesx($i);$x++) {
-                for ($y=0;$y<imagesy($i);$y++) {
-                    $rgb = imagecolorat($i,$x,$y);
-                    $r   = ($rgb >> 16) & 0xFF;
-                    $v   = ($rgb >> 8) & 0xFF;
-                    $a   = $rgb & 0xFF;
-                    $rTotal += $r;
-                    $vTotal += $v;
-                    $aTotal += $a;
-                    $total++;
-                }
-            }
-            $rPromedio = round($rTotal/$total);
-            $vPromedio = round($vTotal/$total);
-            $aPromedio = round($aTotal/$total);
+            $topColorInt =  $palette->getMostUsedColors(1);
+            
+            $topColor = Color::fromIntToRgb( array_key_first($topColorInt) );
+
+            $rgb = ['r' => $topColor['r'], 'g' => $topColor['g'], 'b' => $topColor['b']];
+
+            $res = ColorService::getColorProximidad($rgb);
     
-            return ['r' => $rPromedio, 'g' => $vPromedio, 'b' => $aPromedio];
+            return ['realR' => $topColor['r'], 'realG' => $topColor['g'], 'realB' => $topColor['b'], 'r' => $res['r'], 'g' => $res['g'], 'b' => $res['b'], 'nombre' => $res['nombre']];
         } catch (\Exception $e) {
             return $e;
         }

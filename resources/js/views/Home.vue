@@ -6,7 +6,10 @@
                 <img class="my-4" v-if="imagenSeleccionada != null" :src="imagenSeleccionada" alt="imagenSeleccionada" height="300" width="300">
                 <label v-else class="my-4">Selecciona una imagen</label>
                 <input type="file" @change="onFileSelected">
-                <div v-if="rgb != null" class="bloque mt-3" :style='`background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`'></div>
+                <div v-if="rgb != null" class="col">
+                    <div class="row my-2 bloque" :style='`background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`'></div>
+                    <label>{{nombre}}</label>                
+                </div>
             </div>
         </div>
     </div>
@@ -22,6 +25,7 @@ export default {
         return  {
             imagenSeleccionada: null,
             rgb: null,
+            nombre: null
         }
     },
     methods: {
@@ -52,6 +56,8 @@ export default {
                     g: data.g,
                     b: data.b,
                 }
+
+                this.nombre = data.nombre
             } catch (error) {
                 console.log(error.message)
             }
@@ -67,7 +73,7 @@ export default {
 
     .bloque {
         display:block;
-        height:50px;
-        width:400px;
+        height: 50px;
+        width:100%;
     }
 </style>
