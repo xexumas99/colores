@@ -25,22 +25,20 @@ class ColorController extends Controller
                 return 'No existe';
             }
 
+            $validTypes = array('image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/gif');
+
             //$file = File::get($path);
-            // $type = File::mimeType($path);
-            // $i = '';
+            $type = File::mimeType($path);
 
-            // if($type == 'image/jpeg'){
-
-            //     $i = imagecreatefromjpeg($path);
-            // }            
-            // else if($type == 'image/png'){
-
-            //     $i = imagecreatefrompng($path);
-            // }
+            if (!in_array($type, $validTypes)) {
+                return response()->json([
+                    'mensaje' => 'El tipo de archivo ' . $type . ' no es valido'
+                ], 400);
+            }
             
             $palette = Palette::fromFilename($path);
 
-            $topColorsInt =  $palette->getMostUsedColors(5);
+            $topColorsInt =  $palette->getMostUsedColors(10);
             
             $topColor = Color::fromIntToRgb( array_key_first($topColorsInt) );
 
@@ -64,11 +62,11 @@ class ColorController extends Controller
                 'b' => $res['b'], 
                 'nombre' => $res['nombre'],
                 'complementarios' => $complementarios
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'mensaje' => $e->getMessage()
-            ]); 
+            ], 400); 
         }
     }
 }

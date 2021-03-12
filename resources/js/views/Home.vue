@@ -5,7 +5,7 @@
                 <div class="col text-center">
                     <div class="card bg-dark mb-3">
                         <div class="card-header">
-                            <h1>Colores Page</h1>
+                            <h1>Colores</h1>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -26,7 +26,7 @@
                                     </h2>
                                 </div>
                             </div>
-                            <div class="row mt-3 justify-content-center" v-if="rgb != null">
+                            <div class="row mt-3 justify-content-center mb-3" v-if="rgb != null">
                                 <div  v-for="(c, index) in complementarios" :key="index" class="bloque mx-2" :style="`background-color: rgb(${c.r}, ${c.g}, ${c.b})`"></div>
                             </div>
                         </div>
@@ -57,7 +57,6 @@ export default {
             try {
 
                 const file = event.target.files[0];
-                this.imagenSeleccionada = URL.createObjectURL(file);
 
                 let bodyFormData = new FormData();
                 bodyFormData.append('imagen', file);
@@ -73,8 +72,6 @@ export default {
                 )
                 const data = res.data
 
-                console.log(data)
-
                 this.rgb = {
                     r: data.r,
                     g: data.g,
@@ -85,8 +82,18 @@ export default {
 
                 this.complementarios = data.complementarios
 
+                this.imagenSeleccionada = URL.createObjectURL(file);
+
             } catch (error) {
-                alert(error.message)
+                const res = error.response
+                const data = res.data
+
+                this.imagenSeleccionada = null,
+                this.rgb = null,
+                this.nombre = null,
+                this.complementarios = []
+
+                alert(data.mensaje)
             }
         }
     }
