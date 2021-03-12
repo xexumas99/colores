@@ -10,7 +10,8 @@ class ColorService
 
         $keys = array(
             'Aqua', 'Black', 'Blue', 'Fuchsia', 'Navi', 'Olive', 'Purple', 'Red', 'Gray', 'Green', 'Lime','Maroon',
-            'Silver', 'Teal', 'White', 'Yellow', 'Pastel green', 'Azure', 'Orange', 'Brown'
+            'Silver', 'Teal', 'White', 'Yellow', 'Pastel green', 'Azure', 'Orange', 'Brown', 'Pink', 'Magenta', 'Ruby', 'Gold',
+            'Hunter'
         );
 
         $colores = [
@@ -33,7 +34,12 @@ class ColorService
             'Pastel green' => '#b9ceac',
             'Azure' => '#3399ff',
             'Orange' => '#ff7f00',
-            'Brown' => '#7b4f2c'
+            'Brown' => '#7b4f2c',
+            'Pink' => '#fea0bb',
+            'Magenta' => '#f856ce',
+            'Ruby' => '#dd196d',
+            'Gold' => '#dbc01f',
+            'Hunter' => '#3e704b'
         ];
 
         $bestNombre = '';
