@@ -46,7 +46,7 @@ class ColorController extends Controller
 
             $complementarios = array();
 
-            for ($i=1; $i < count($arrayColors); $i++) { 
+            for ($i=0; $i < count($arrayColors); $i++) { 
                 
                 $color = Color::fromIntToRgb($arrayColors[$i]);
                 array_push($complementarios, $color);

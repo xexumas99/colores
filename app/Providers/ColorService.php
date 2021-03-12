@@ -10,7 +10,7 @@ class ColorService
 
         $keys = array(
             'Aqua', 'Black', 'Blue', 'Fuchsia', 'Navi', 'Olive', 'Purple', 'Red', 'Gray', 'Green', 'Lime','Maroon',
-            'Silver', 'Teal', 'White', 'Yellow'
+            'Silver', 'Teal', 'White', 'Yellow', 'Pastel green', 'Azure', 'Orange', 'Brown'
         );
 
         $colores = [
@@ -30,6 +30,10 @@ class ColorService
             'Teal' => '#008080',
             'White' => '#FFFFFF',
             'Yellow' => '#FFFF00',
+            'Pastel green' => '#b9ceac',
+            'Azure' => '#3399ff',
+            'Orange' => '#ff7f00',
+            'Brown' => '#7b4f2c'
         ];
 
         $bestNombre = '';
