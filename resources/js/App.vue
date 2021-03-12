@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="view">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
       <router-link :to="{ name: 'home' }" class="navbar-brand"
         >Colores</router-link
@@ -26,3 +26,10 @@ export default {
   },
 };
 </script>
+
+<style>
+  .view{
+    height: 94vh;
+    width: 100vw;
+  }
+</style>

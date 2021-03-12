@@ -1,14 +1,33 @@
 <template>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-4 text-center">
-                <h1>Colores Page</h1>
-                <img class="my-4" v-if="imagenSeleccionada != null" :src="imagenSeleccionada" alt="imagenSeleccionada" height="300" width="300">
-                <label v-else class="my-4">Selecciona una imagen</label>
-                <input type="file" @change="onFileSelected">
-                <div v-if="rgb != null" class="col">
-                    <div class="row my-2 bloque" :style='`background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`'></div>
-                    <label>{{nombre}}</label>                
+    <div class="view pt-5" :style="rgb != null ? `background-color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` : ''">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col text-center">
+                    <div class="card bg-dark mb-3">
+                        <div class="card-header">
+                            <h1>Colores Page</h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <img class="my-4" v-if="imagenSeleccionada != null" :src="imagenSeleccionada" alt="imagenSeleccionada" height="300" width="300">
+                                    <label v-else class="my-4">Selecciona una imagen</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="file" @change="onFileSelected">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <h2 v-if="rgb != null" :style="`color: rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`">
+                                        <strong>{{nombre}}</strong>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -59,7 +78,7 @@ export default {
 
                 this.nombre = data.nombre
             } catch (error) {
-                console.log(error.message)
+                alert(error.message)
             }
         }
     }
@@ -67,13 +86,14 @@ export default {
 </script>
 
 <style scoped>
-    h1 {
-        color: #343a40;
-    }
 
     .bloque {
         display:block;
         height: 50px;
         width:100%;
+    }
+
+    .view {
+        color: white;
     }
 </style>
