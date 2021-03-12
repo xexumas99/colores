@@ -8,20 +8,16 @@ composer install
 copy .env.example .env
 php artisan key:generate
 npm install
+npm run dev
 ```
 
 ## Arrancar el servidor
 
-Debemos tener abiertas 2 terminales en el directorio raíz del proyecto.
+Debemos abrir una terminal en el directorio raíz del proyecto.
 
-En una ejecutamos: 
+Ejecutamos: 
 ```
 php artisan serve
-```
-
-En la otra:
-```
-npm run watch
 ```
 
 ¡Listo!, la página debería estar corriendo en http://127.0.0.1:8000
