@@ -26,6 +26,9 @@
                                     </h2>
                                 </div>
                             </div>
+                            <div class="row mt-3 justify-content-center" v-if="rgb != null">
+                                <div  v-for="(c, index) in complementarios" :key="index" class="bloque mx-2" :style="`background-color: rgb(${c.r}, ${c.g}, ${c.b})`"></div>
+                            </div>
                         </div>
                     </div> 
                 </div>
@@ -44,7 +47,8 @@ export default {
         return  {
             imagenSeleccionada: null,
             rgb: null,
-            nombre: null
+            nombre: null,
+            complementarios: []
         }
     },
     methods: {
@@ -64,11 +68,12 @@ export default {
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
-
                         }
                     }
                 )
                 const data = res.data
+
+                console.log(data)
 
                 this.rgb = {
                     r: data.r,
@@ -77,6 +82,9 @@ export default {
                 }
 
                 this.nombre = data.nombre
+
+                this.complementarios = data.complementarios
+
             } catch (error) {
                 alert(error.message)
             }
@@ -90,7 +98,7 @@ export default {
     .bloque {
         display:block;
         height: 50px;
-        width:100%;
+        width: 50px;
     }
 
     .view {

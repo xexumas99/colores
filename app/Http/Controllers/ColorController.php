@@ -40,17 +40,35 @@ class ColorController extends Controller
             
             $palette = Palette::fromFilename($path);
 
-            $topColorInt =  $palette->getMostUsedColors(1);
+            $topColorsInt =  $palette->getMostUsedColors(5);
             
-            $topColor = Color::fromIntToRgb( array_key_first($topColorInt) );
+            $topColor = Color::fromIntToRgb( array_key_first($topColorsInt) );
+
+            $arrayColors = array_keys($topColorsInt);
+
+            $complementarios = array();
+
+            for ($i=1; $i < count($arrayColors); $i++) { 
+                
+                $color = Color::fromIntToRgb($arrayColors[$i]);
+                array_push($complementarios, $color);
+            }
 
             $rgb = ['r' => $topColor['r'], 'g' => $topColor['g'], 'b' => $topColor['b']];
 
             $res = ColorService::getColorProximidad($rgb);
     
-            return ['realR' => $topColor['r'], 'realG' => $topColor['g'], 'realB' => $topColor['b'], 'r' => $res['r'], 'g' => $res['g'], 'b' => $res['b'], 'nombre' => $res['nombre']];
+            return response()->json([
+                'r' => $res['r'], 
+                'g' => $res['g'], 
+                'b' => $res['b'], 
+                'nombre' => $res['nombre'],
+                'complementarios' => $complementarios
+            ]);
         } catch (\Exception $e) {
-            return $e;
+            return response()->json([
+                'mensaje' => $e->getMessage()
+            ]); 
         }
     }
 }
