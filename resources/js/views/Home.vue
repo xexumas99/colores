@@ -11,7 +11,7 @@
                             <div class="row">
                                 <div class="col">
                                     <img class="my-4" v-if="imagenSeleccionada != null" :src="imagenSeleccionada" alt="imagenSeleccionada" height="300" width="300">
-                                    <label v-else class="my-4">Selecciona una imagen</label>
+                                    <h3 v-else class="my-4">Selecciona una imagen</h3>
                                 </div>
                             </div>
                             <div class="row">
