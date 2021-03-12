@@ -12,7 +12,8 @@ npm install
 
 ## Arrancar el servidor
 
-Debemos tener abirtas dos terminales en el directorio raiz del proyecto.
+Debemos tener abiertas 2 terminales en el directorio raíz del proyecto.
+
 En una ejecutamos: 
 ```
 php artisan serve
@@ -23,4 +24,4 @@ En la otra:
 npm run watch
 ```
 
-¡Listo!, la página debería abrirse en http://127.0.0.1:8000
+¡Listo!, la página debería estar corriendo en http://127.0.0.1:8000
