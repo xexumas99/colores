@@ -17,7 +17,7 @@ class ColorController extends Controller
         
         try {
 
-            $img = $request->file('imagen')->storeAs('imagenes', 'imagen.png'); 
+            $img = $request->file('imagen')->store(''); 
 
             $path = storage_path('app/' . $img);
 
@@ -55,6 +55,8 @@ class ColorController extends Controller
             $rgb = ['r' => $topColor['r'], 'g' => $topColor['g'], 'b' => $topColor['b']];
 
             $res = ColorService::getColorProximidad($rgb);
+
+            File::delete($path);
     
             return response()->json([
                 'r' => $res['r'], 
